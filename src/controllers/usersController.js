@@ -68,4 +68,4 @@ export async function signInUser(req, res) {
         console.error(error);
         res.sendStatus(500);
     }
-  }
+}
