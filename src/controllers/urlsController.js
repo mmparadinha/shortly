@@ -6,13 +6,13 @@ import * as controllerHelper from './controllerHelper.js';
 export async function shortenUrl(req, res) {
     const url = stripHtml(req.body.url).result;
     const { authorization } = req.headers;
-    if (!authorization) { return controllerHelper.unauthorizedResponse(res) };
+    if (!authorization) { return controllerHelper.unauthorizedResponse(res); }
 
     const token = stripHtml(authorization.replace('Bearer ', '')).result;
 
     try {
         const loggedIn = await urlsRepository.getSessions(token);
-        if (!loggedIn.rows[0]) { return controllerHelper.unauthorizedResponse(res) };
+        if (!loggedIn.rows[0]) { return controllerHelper.unauthorizedResponse(res); }
 
         const shortUrl = await nanoid();
 
@@ -20,7 +20,7 @@ export async function shortenUrl(req, res) {
         const body = {
             shortUrl
         };
-        return controllerHelper.createdResponse(res, body)
+        return controllerHelper.createdResponse(res, body);
 
     } catch (err) {
         controllerHelper.serverError(res, err);
@@ -32,7 +32,7 @@ export async function listSingleUrl(req, res) {
 
     try {
         const urlData = await urlsRepository.getUrl(id);
-        if (!urlData.rows[0]) { return controllerHelper.notFoundResponse(res) };
+        if (!urlData.rows[0]) { return controllerHelper.notFoundResponse(res); }
 
         return controllerHelper.successResponse(res, urlData.rows[0]);
 
@@ -46,7 +46,7 @@ export async function redirectUrl(req, res) {
 
     try {
         const originalUrl = await urlsRepository.getRedirection(shortUrl);
-        if (!originalUrl.rows[0]) { return controllerHelper.notFoundResponse(res) };
+        if (!originalUrl.rows[0]) { return controllerHelper.notFoundResponse(res); }
 
         await urlsRepository.insertVisit(originalUrl);
         return res.redirect(originalUrl.rows[0].url);
@@ -65,10 +65,10 @@ export async function deleteUrl(req, res) {
 
     try {
         const urlExists = await urlsRepository.getUrl(id);
-        if (!urlExists.rows[0]) { return controllerHelper.notFoundResponse(res) };
+        if (!urlExists.rows[0]) { return controllerHelper.notFoundResponse(res); }
 
         const urlOwner = await urlsRepository.checkUrlOwner(id, token);
-        if (!urlOwner.rows[0]) { return controllerHelper.unauthorizedResponse(res) };
+        if (!urlOwner.rows[0]) { return controllerHelper.unauthorizedResponse(res); }
 
         await urlsRepository.removeUrl(id);
         return controllerHelper.doneResponse(res);
@@ -81,7 +81,7 @@ export async function deleteUrl(req, res) {
 export async function getRankings(req, res) {
     try {
         const ranking = await urlsRepository.listRankings();
-        if (!ranking.rows[0]) { return controllerHelper.notFoundResponse(res) }
+        if (!ranking.rows[0]) { return controllerHelper.notFoundResponse(res); }
 
         return controllerHelper.successResponse(res, ranking.rows);
 

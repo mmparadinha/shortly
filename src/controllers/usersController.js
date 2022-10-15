@@ -12,7 +12,7 @@ export async function signUpUser(req, res) {
 
     try {
         const emailExists = await usersRepository.getUser(email);
-        if (emailExists.rows[0]) { return controllerHelper.conflictResponse(res) };
+        if (emailExists.rows[0]) { return controllerHelper.conflictResponse(res); }
 
         await usersRepository.insertNewUser(name, email, encryptedPassword);
         return controllerHelper.createdResponse(res);
@@ -28,7 +28,7 @@ export async function signInUser(req, res) {
 
     try {
         const user = await usersRepository.getUser(email);
-        if (!user.rows[0]) { return controllerHelper.unauthorizedResponse(res) };
+        if (!user.rows[0]) { return controllerHelper.unauthorizedResponse(res); }
 
         const passwordCheck = bcrypt.compareSync(password, user.rows[0].password);
 
@@ -62,13 +62,13 @@ export async function signInUser(req, res) {
 
 export async function listUser(req, res) {
     const { authorization } = req.headers;
-    if (!authorization) { return controllerHelper.unauthorizedResponse(res) };
+    if (!authorization) { return controllerHelper.unauthorizedResponse(res); }
 
     const token = stripHtml(authorization.replace('Bearer ', '')).result;
 
     try {
         const userData = await usersRepository.listUserData(token);
-        if (!userData.rows[0]) { return controllerHelper.notFoundResponse(res) }
+        if (!userData.rows[0]) { return controllerHelper.notFoundResponse(res); }
 
         const userUrls = await usersRepository.listUserUrls(userData);
         const body = {
