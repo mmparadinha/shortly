@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loading from "../commons/Loading";
 import { postLogin } from "../../services/shortly";
+import Header from "../commons/Header";
 
 function LogInPage() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function LogInPage() {
 
     useEffect(() => {
         if (localStorage.getItem('shortly') !== null) {
-            navigate('/home');
+            navigate('/');
         }
     }, [navigate]);
 
@@ -52,16 +53,12 @@ function LogInPage() {
 
     return (
         <Main>
-            <Link to="/">
-                <h3>
-                    Entrar
-                </h3>
-            </Link>
-            <h3>
-                Cadastrar-se
-            </h3>
+            <Header />
 
-            <img src="%PUBLIC_URL%/assets/logo.png" alt="shortly logo" />
+            <Title>
+                <h1>Shortly</h1>
+                <img src="../commons/logo.png" alt="shortly logo" />
+            </Title>
 
             <Box onSubmit={logIn}>
                 <Input
@@ -92,29 +89,20 @@ function LogInPage() {
 export default LogInPage;
 
 const Main = styled.div`
-    background-color: purple;
     min-height: 100vh;
+    width: 1017px;
     margin: auto;
     padding: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    h1 {
-        font-family: 'Lexend Deca', sans-serif;
-        font-weight: 400;
-        font-size: 32px;
-        color: #FFFFFF;
-        margin-bottom: 24px;
-    }
+    font-family: 'Lexend Deca', sans-serif;
 
     h3 {
-        font-family: 'Lexend Deca', sans-serif;
-        font-weight: 700;
-        font-size: 15px;
-        color: #FFFFFF;
-        margin-top: 36px;
+        font-weight: 400;
+        font-size: 14px;
+        color: #000000;
         text-align: center;
 
         &:hover {
@@ -123,9 +111,21 @@ const Main = styled.div`
         }
 
         &:disabled {
-            opacity: 0.8;
+            opacity: 0.7;
             cursor: default;
         }
+    }
+`;
+
+const Title = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h1 {
+        font-weight: 200;
+        font-size: 64px;
+        color: #000000;
     }
 `;
 
@@ -136,21 +136,22 @@ const Box = styled.form`
     align-items: center;
     justify-content: center;
     gap: 24px;
+    margin-top: 130px;
 `;
 
 const Input = styled.input`
     width: 100%;
-    height: 58px;
-    font-family: 'Lexend Deca', sans-serif;
+    height: 60px;
     font-weight: 400;
-    font-size: 20px;
-    color: #000000;
+    font-size: 14px;
+    background-color: #FFFFFF;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 12px;
+    border: 1px solid rgba(120, 177, 89, 0.25);
+    box-shadow: 0px 4px 24px rgba(120, 177, 89, 0.12);
 
     &::placeholder {
-        color: #000000;
-        opacity: 0.8;
+        color: #9C9C9C;
     }
 
     &:disabled {
@@ -160,14 +161,14 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-    background-color: #A328D6;
-    width: 100%;
-    height: 46px;
+    background-color: #5D9040;
+    width: 182px;
+    height: 60px;
+    margin-top: 37px;
     border: none;
-    border-radius: 5px;
-    font-family: 'Lexend Deca', sans-serif;
+    border-radius: 12px;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 14px;
     color: #FFFFFF;
     padding: 10px;
     display: flex;
@@ -178,7 +179,7 @@ const Button = styled.button`
         filter: brightness(1.2);
         cursor: pointer;
     }
-    
+
     &:disabled {
         filter: brightness(0.7);
         cursor: default;
