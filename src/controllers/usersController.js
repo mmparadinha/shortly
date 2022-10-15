@@ -69,3 +69,47 @@ export async function signInUser(req, res) {
         res.sendStatus(500);
     }
 }
+
+export async function listUser(req, res) {
+    const { authorization } = req.headers;
+    if (!authorization) { return res.sendStatus(401) };
+
+    const token = stripHtml(authorization.replace('Bearer ', '')).result;
+
+    try {
+        const userData = await connection.query(`
+            SELECT
+                users.id,
+                users.name,
+                COUNT(visits."urlId") as "visitCount"
+            FROM users
+            LEFT JOIN sessions ON users.id=sessions."userId"
+            LEFT JOIN urls ON users.id=urls."userId"
+            LEFT JOIN visits ON urls.id=visits."urlId"
+            WHERE token=$1
+            GROUP BY users.id
+        ;`, [token]);
+        if (!userData.rows[0]) { return res.sendStatus(404) }
+
+        const userUrls = await connection.query(`
+            SELECT 
+                urls.id,
+                urls."shortUrl",
+                urls.url,
+                COUNT(visits."urlId") as "visitCount"
+            FROM urls
+            LEFT JOIN visits ON urls.id=visits."urlId"
+            WHERE "userId"=$1
+            GROUP BY urls.id
+        ;`, [userData.rows[0].id]);
+
+        return res.status(200).send({
+            ...userData.rows[0],
+            shortenedUrls: userUrls.rows
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
+}
