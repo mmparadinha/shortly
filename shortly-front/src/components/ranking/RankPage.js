@@ -6,7 +6,7 @@ import Loading from "../commons/Loading";
 import { postSignUp } from "../../services/shortly";
 import Header from "../commons/Header";
 
-function SignUpPage() {
+function RankPage() {
     const navigate = useNavigate();
     const [sending, setSending] = useState(false);
     const [registration, setRegistration] = useState({
@@ -99,7 +99,7 @@ function SignUpPage() {
     );
 }
 
-export default SignUpPage;
+export default RankPage;
 
 const Main = styled.div`
     min-height: 100vh;

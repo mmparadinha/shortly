@@ -17,7 +17,7 @@ function LogInPage() {
         if (localStorage.getItem('shortly') !== null) {
             navigate('/home');
         }
-    }, []);
+    }, [navigate]);
 
     function updateInput(e) {
         setLogin({ ...login, [e.target.name]: e.target.value });
@@ -61,7 +61,7 @@ function LogInPage() {
                 Cadastrar-se
             </h3>
 
-            <img src="../../../public/assets/Logo.png" alt="shortly logo" />
+            <img src="%PUBLIC_URL%/assets/logo.png" alt="shortly logo" />
 
             <Box onSubmit={logIn}>
                 <Input
@@ -102,7 +102,7 @@ const Main = styled.div`
     justify-content: center;
 
     h1 {
-        font-family: 'Saira Stencil One', cursive;
+        font-family: 'Lexend Deca', sans-serif;
         font-weight: 400;
         font-size: 32px;
         color: #FFFFFF;
@@ -110,7 +110,7 @@ const Main = styled.div`
     }
 
     h3 {
-        font-family: 'Raleway', sans-serif;
+        font-family: 'Lexend Deca', sans-serif;
         font-weight: 700;
         font-size: 15px;
         color: #FFFFFF;
@@ -130,6 +130,7 @@ const Main = styled.div`
 `;
 
 const Box = styled.form`
+    width: 769px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -140,7 +141,7 @@ const Box = styled.form`
 const Input = styled.input`
     width: 100%;
     height: 58px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     font-size: 20px;
     color: #000000;
@@ -164,7 +165,7 @@ const Button = styled.button`
     height: 46px;
     border: none;
     border-radius: 5px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Lexend Deca', sans-serif;
     font-weight: 700;
     font-size: 20px;
     color: #FFFFFF;
