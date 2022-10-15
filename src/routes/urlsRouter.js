@@ -1,6 +1,6 @@
 import express from "express";
 import { shortenUrl, listSingleUrl, redirectUrl, deleteUrl, getRankings } from "../controllers/urlsController.js";
-import { urlMiddleware } from "../middlewares/urlMiddleware.js";
+import { urlMiddleware } from "../middlewares/schemasMiddleware.js";
 
 const urlsRouter = express.Router();
 

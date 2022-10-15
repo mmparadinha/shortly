@@ -1,6 +1,6 @@
 import express from "express";
 import { signUpUser, signInUser, listUser } from "../controllers/usersController.js";
-import { userSignUpMiddleware, userSignInMiddleware } from "../middlewares/userMiddleware.js";
+import { userSignUpMiddleware, userSignInMiddleware } from "../middlewares/schemasMiddleware.js";
 
 const usersRouter = express.Router();
 
