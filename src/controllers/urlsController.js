@@ -110,3 +110,29 @@ export async function deleteUrl(req, res) {
         res.sendStatus(500);
     }
 }
+
+export async function getRankings(req, res) {
+    try {
+        const ranking = await connection.query(`
+            SELECT
+                users.id,
+                users.name,
+                COUNT(DISTINCT urls.id) as "linksCount",
+                COUNT(visits.id) as "visitCount"
+            FROM users
+            LEFT JOIN sessions ON users.id=sessions."userId"
+            LEFT JOIN urls ON users.id=urls."userId"
+            LEFT JOIN visits ON urls.id=visits."urlId"
+            GROUP BY users.id
+            ORDER BY "visitCount" DESC
+            LIMIT 10
+        ;`);
+        if (!ranking.rows[0]) { return res.sendStatus(404) }
+
+        return res.status(200).send(ranking.rows);
+
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
+}
