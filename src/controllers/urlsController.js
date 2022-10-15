@@ -1,28 +1,29 @@
 import { stripHtml } from 'string-strip-html';
 import { nanoid } from 'nanoid/async';
 import * as urlsRepository from '../repositories/urlsRepository.js';
+import * as controllerHelper from './controllerHelper.js';
 
 export async function shortenUrl(req, res) {
     const url = stripHtml(req.body.url).result;
     const { authorization } = req.headers;
-    if (!authorization) { return res.sendStatus(401) };
+    if (!authorization) { return controllerHelper.unauthorizedResponse(res) };
 
     const token = stripHtml(authorization.replace('Bearer ', '')).result;
 
     try {
         const loggedIn = await urlsRepository.getSessions(token);
-        if (!loggedIn.rows[0]) { return res.sendStatus(401) };
+        if (!loggedIn.rows[0]) { return controllerHelper.unauthorizedResponse(res) };
 
         const shortUrl = await nanoid();
 
         await urlsRepository.insertNewUrl(loggedIn, url, shortUrl);
-        return res.status(201).send({
+        const body = {
             shortUrl
-        });
+        };
+        return controllerHelper.createdResponse(res, body)
 
     } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
+        controllerHelper.serverError(res, err);
     }
 }
 
@@ -31,13 +32,12 @@ export async function listSingleUrl(req, res) {
 
     try {
         const urlData = await urlsRepository.getUrl(id);
-        if (!urlData.rows[0]) { return res.sendStatus(404) };
+        if (!urlData.rows[0]) { return controllerHelper.notFoundResponse(res) };
 
-        return res.status(200).send(urlData.rows[0]);
+        return controllerHelper.successResponse(res, urlData.rows[0]);
 
     } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
+        controllerHelper.serverError(res, err);
     }
 }
 
@@ -46,49 +46,46 @@ export async function redirectUrl(req, res) {
 
     try {
         const originalUrl = await urlsRepository.getRedirection(shortUrl);
-        if (!originalUrl.rows[0]) { return res.sendStatus(404) };
+        if (!originalUrl.rows[0]) { return controllerHelper.notFoundResponse(res) };
 
         await urlsRepository.insertVisit(originalUrl);
         return res.redirect(originalUrl.rows[0].url);
 
     } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
+        controllerHelper.serverError(res, err);
     }
 }
 
 export async function deleteUrl(req, res) {
     const { id } = req.params;
     const { authorization } = req.headers;
-    if (!authorization) { return res.sendStatus(401) };
+    if (!authorization) { return controllerHelper.unauthorizedResponse(res) };
 
     const token = stripHtml(authorization.replace('Bearer ', '')).result;
 
     try {
         const urlExists = await urlsRepository.getUrl(id);
-        if (!urlExists.rows[0]) { return res.sendStatus(404) };
+        if (!urlExists.rows[0]) { return controllerHelper.notFoundResponse(res) };
 
         const urlOwner = await urlsRepository.checkUrlOwner(id, token);
-        if (!urlOwner.rows[0]) { return res.sendStatus(401) };
+        if (!urlOwner.rows[0]) { return controllerHelper.unauthorizedResponse(res) };
 
         await urlsRepository.removeUrl(id);
-        return res.sendStatus(204);
+        return controllerHelper.doneResponse(res);
 
     } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
+        controllerHelper.serverError(res, err);
     }
 }
 
 export async function getRankings(req, res) {
     try {
         const ranking = await urlsRepository.listRankings();
-        if (!ranking.rows[0]) { return res.sendStatus(404) }
+        if (!ranking.rows[0]) { return controllerHelper.notFoundResponse(res) }
 
-        return res.status(200).send(ranking.rows);
+        return controllerHelper.successResponse(res, ranking.rows);
 
     } catch (error) {
-        console.error(error);
-        res.sendStatus(500);
+        controllerHelper.serverError(res, err);
     }
 }
