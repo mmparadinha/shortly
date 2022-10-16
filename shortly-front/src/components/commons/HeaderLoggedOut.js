@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { GiShorts } from "react-icons/gi";
 
 export default function HeaderLoggetOut() {
 
@@ -15,7 +16,7 @@ export default function HeaderLoggetOut() {
             </Navbar>
             <Title>
                 <h1>Shortly</h1>
-                <img src="../commons/logo.png" alt="shortly logo" />
+                <ShortlyLogo />
             </Title>
         </Main>
     );
@@ -61,7 +62,12 @@ const Title = styled.div`
 
     h1 {
         font-weight: 200;
-        font-size: 64px;
         color: #000000;
+        font-size: 64px;
     }
+`;
+
+const ShortlyLogo = styled(GiShorts)`
+    color: #78B159;
+    font-size: 96px;
 `;

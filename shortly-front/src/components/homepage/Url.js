@@ -24,7 +24,7 @@ export default function Url({ data }) {
                 <span>Quantidade de visitantes: {data.visitCount}</span>
             </ContentContainer>
             <DeleteContainer>
-                <RiDeleteBin5Line onClick={() => removeTransaction()}/>
+                <TrashCan onClick={() => removeTransaction()}/>
             </DeleteContainer>
         </Box>
     )
@@ -47,6 +47,10 @@ const ContentContainer = styled.div`
     justify-content: space-around;
     font-weight: 400;
     font-size: 14px;
+
+    span {
+        cursor: default;
+    }
 `;
 
 const DeleteContainer = styled.div`
@@ -55,10 +59,14 @@ const DeleteContainer = styled.div`
     border-radius: 0px 12px 12px 0px;
     width: 15%;
     height: 60px;
-    color: red;
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+const TrashCan = styled(RiDeleteBin5Line)`
+    color: red;
     font-size: 24px;
+    cursor: pointer;
 `;
 

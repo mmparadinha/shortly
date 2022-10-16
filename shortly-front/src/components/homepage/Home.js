@@ -32,7 +32,7 @@ function LogInPage() {
         setSending(true);
         postUrl(input)
             .then(() => {
-                navigate('/home');
+                navigate('/');
                 })
             .catch(erro => {
                 alert('Não foi possível encurtar, tente novamente');

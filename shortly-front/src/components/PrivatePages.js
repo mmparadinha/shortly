@@ -4,15 +4,15 @@ import React from "react";
 
 function PrivatePages() {
     const navigate = useNavigate();
-    const { token } = JSON.parse(localStorage.getItem('shortly'));
+    const { token } = JSON.parse(localStorage.getItem('mywallet'));
 
     useEffect(() => {
         if (token === null) {
             alert('Não autorizado, favor refazer o login');
-            localStorage.clear('shortly');
-            navigate('/login');
-        }
-    }, []);
+            localStorage.clear('mywallet');
+            navigate('/');
+        }},
+    []);
 
     return (
         <>

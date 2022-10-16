@@ -40,4 +40,9 @@ function deleteUrl(id) {
     return promise;
 }
 
-export { postSignUp, postLogin, postUrl, getUserUrls, deleteUrl };
+function getRanking() {
+  const promise = axios.get(`${URL_BASE}/ranking`);
+  return promise;
+}
+
+export { postSignUp, postLogin, postUrl, getUserUrls, deleteUrl, getRanking };
