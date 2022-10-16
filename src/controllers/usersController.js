@@ -37,7 +37,8 @@ export async function signInUser(req, res) {
 
             if (session.rows[0]) {
                 const body = {
-                    token: session.rows[0].token
+                    token: session.rows[0].token,
+                    username: user.rows[0].name
                 };
 
                 return controllerHelper.successResponse(res, body);

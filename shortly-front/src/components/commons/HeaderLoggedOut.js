@@ -13,6 +13,10 @@ export default function HeaderLoggetOut() {
                     <span>Cadastrar-se</span>
                 </Link>
             </Navbar>
+            <Title>
+                <h1>Shortly</h1>
+                <img src="../commons/logo.png" alt="shortly logo" />
+            </Title>
         </Main>
     );
 };
@@ -20,17 +24,19 @@ export default function HeaderLoggetOut() {
 const Main = styled.div`
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: fixed;
+    gap: 20px;
     top: 60px;
     left: 0;
     z-index: 1;
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
     
     span {
-        font-family: 'Lexend Deca', sans-serif;
-        font-weight: 400;
-        font-size: 14px;
         color: #9C9C9C;
 
         &:hover {
@@ -46,4 +52,16 @@ const Navbar = styled.div`
     align-items: center;
     width: 1017px;
     gap: 20px;
+`;
+
+const Title = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h1 {
+        font-weight: 200;
+        font-size: 64px;
+        color: #000000;
+    }
 `;

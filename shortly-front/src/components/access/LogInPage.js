@@ -38,11 +38,10 @@ function LogInPage() {
         postLogin(login)
             .then(resposta => {
                 localStorage.setItem('shortly', JSON.stringify({
-                    userId: resposta.data.userId,                    
                     token: resposta.data.token,
                     username: resposta.data.username
                 }));
-                navigate('/home');
+                navigate('/');
                 })
             .catch(erro => {
                 alert('Não foi possível logar, tente novamente');
@@ -54,11 +53,6 @@ function LogInPage() {
     return (
         <Main>
             <Header />
-
-            <Title>
-                <h1>Shortly</h1>
-                <img src="../commons/logo.png" alt="shortly logo" />
-            </Title>
 
             <Box onSubmit={logIn}>
                 <Input
@@ -91,42 +85,11 @@ export default LogInPage;
 const Main = styled.div`
     min-height: 100vh;
     width: 1017px;
-    margin: auto;
-    padding: 5%;
+    margin: 130px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     font-family: 'Lexend Deca', sans-serif;
-
-    h3 {
-        font-weight: 400;
-        font-size: 14px;
-        color: #000000;
-        text-align: center;
-
-        &:hover {
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        &:disabled {
-            opacity: 0.7;
-            cursor: default;
-        }
-    }
-`;
-
-const Title = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    h1 {
-        font-weight: 200;
-        font-size: 64px;
-        color: #000000;
-    }
 `;
 
 const Box = styled.form`

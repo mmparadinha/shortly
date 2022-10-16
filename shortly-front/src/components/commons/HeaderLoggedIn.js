@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function HeaderLoggetIn() {
     const navigate = useNavigate();
+    const { username } = JSON.parse(localStorage.getItem('shortly'));
 
     function logOut() {
         localStorage.removeItem('shortly');
@@ -13,7 +15,7 @@ export default function HeaderLoggetIn() {
         <Main>
             <Navbar>
                 <div>
-                    <p>Seja bem-vindo(a), USERNAME!</p>
+                    <p>Seja bem-vindo(a), {username}!</p>
                 </div>
                 <div>
                     <Link to="/">
@@ -25,6 +27,10 @@ export default function HeaderLoggetIn() {
                     <span onClick={logOut}>Sair</span>
                 </div>
             </Navbar>
+            <Title>
+                <h1>Shortly</h1>
+                <img src="../commons/logo.png" alt="shortly logo" />
+            </Title>
         </Main>
     );
 };
@@ -32,9 +38,11 @@ export default function HeaderLoggetIn() {
 const Main = styled.div`
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: fixed;
+    gap: 20px;
     top: 60px;
     left: 0;
     z-index: 1;
@@ -65,5 +73,17 @@ const Navbar = styled.div`
     div {
         display: flex;
         gap: 20px;
+    }
+`;
+
+const Title = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h1 {
+        font-weight: 200;
+        font-size: 64px;
+        color: #000000;
     }
 `;

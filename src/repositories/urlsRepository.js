@@ -47,7 +47,7 @@ async function checkUrlOwner(id, token) {
             sessions.token
         FROM urls
         JOIN sessions ON urls."userId"=sessions.id
-        WHERE urls."userId"=$1 AND sessions.token=$2
+        WHERE urls.id=$1 AND sessions.token=$2
     ;`, [id, token]);
 }
 

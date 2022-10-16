@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../commons/Loading";
 import { postSignUp } from "../../services/shortly";
 import Header from "../commons/Header";
@@ -48,12 +48,6 @@ function SignUpPage() {
     return (
         <Main>
             <Header />
-
-            <Title>
-                <h1>Shortly</h1>
-                <img src="../commons/logo.png" alt="shortly logo" />
-            </Title>
-
 
             <Box onSubmit={signUp}>
                 <Input
@@ -104,42 +98,11 @@ export default SignUpPage;
 const Main = styled.div`
     min-height: 100vh;
     width: 1017px;
-    margin: auto;
-    padding: 5%;
+    margin: 130px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     font-family: 'Lexend Deca', sans-serif;
-
-    h3 {
-        font-weight: 400;
-        font-size: 14px;
-        color: #000000;
-        text-align: center;
-
-        &:hover {
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        &:disabled {
-            opacity: 0.7;
-            cursor: default;
-        }
-    }
-`;
-
-const Title = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    h1 {
-        font-weight: 200;
-        font-size: 64px;
-        color: #000000;
-    }
 `;
 
 const Box = styled.form`
@@ -147,7 +110,6 @@ const Box = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 24px;
     margin-top: 130px;
 `;
