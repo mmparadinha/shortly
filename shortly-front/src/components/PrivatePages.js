@@ -1,22 +1,26 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import React from "react";
 
 function PrivatePages() {
     const navigate = useNavigate();
-    const { token } = JSON.parse(localStorage.getItem('mywallet'));
+    let token = null;
+
+    function getToken() {
+        const session = localStorage.getItem('shortly');
+        if (session) {
+            return JSON.parse(session).token;
+        } else {
+            return null;
+        }
+    }
 
     useEffect(() => {
-        if (token === null) {
-            alert('Não autorizado, favor refazer o login');
-            localStorage.clear('mywallet');
-            navigate('/');
-        }},
-    []);
+        token = getToken();
+    }, []);
 
     return (
         <>
-            {token !== null ? <Outlet/> : navigate('/')}
+            {token !== null ? <Outlet/> : navigate('/ranking')}
         </>
     );
 };

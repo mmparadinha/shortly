@@ -69,7 +69,7 @@ async function listRankings() {
         LEFT JOIN urls ON users.id=urls."userId"
         LEFT JOIN visits ON urls.id=visits."urlId"
         GROUP BY users.id
-        ORDER BY "visitCount" DESC
+        ORDER BY "visitCount" DESC, "linksCount" DESC
         LIMIT 10
     ;`);
 }

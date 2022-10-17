@@ -1,4 +1,3 @@
-import React from "react";
 import GlobalStyles from "./GlobalStyles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogInPage from "./access/LogInPage";
