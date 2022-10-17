@@ -8,7 +8,7 @@ function PrivatePages() {
     function getToken() {
         const session = localStorage.getItem('shortly');
         if (session) {
-            return JSON.parse(session).token;
+            return JSON.parse(session);
         } else {
             return null;
         }
@@ -20,7 +20,7 @@ function PrivatePages() {
 
     return (
         <>
-            {token !== null ? <Outlet/> : navigate('/ranking')}
+            {token !== null ? <Outlet/> : ''}
         </>
     );
 };

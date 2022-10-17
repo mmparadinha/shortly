@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL_BASE = 'http://127.0.0.1:4000';
+const URL_BASE = 'https://back-shortly-mmparadinha.herokuapp.com';
 
 function postSignUp(registration) {
   const promise = axios.post(`${URL_BASE}/signup`, registration);
