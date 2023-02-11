@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL_BASE = 'postgres://shortly_deploy_user:GeeW0xFfMiPp5DzLU6pImXP3zKtB0pfE@dpg-cfjuh3la49903flmhjcg-a.oregon-postgres.render.com/shortly_deploy';
+const URL_BASE = process.env.BACKEND_URL;
 
 function postSignUp(registration) {
   const promise = axios.post(`${URL_BASE}/signup`, registration);
